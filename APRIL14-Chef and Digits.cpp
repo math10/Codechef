@@ -4,7 +4,6 @@ Aust cse 28th Batch
 ID:11.02.04.097
 */
 
-
 //{ Template
 using namespace std;
 //{ C-headers
