@@ -115,30 +115,14 @@ tree T[mx<<4],T1[mx<<4];
 int64 lazy[mx<<4];
 int64 iddx[mx];
 int64 lazy1[mx<<4];
-void update(int lf,int rt,int idx,int x,int y,int64 a,
-            int64 b);
-void update1(int lf,int rt,int idx,int x,int y,
-             int64 a,
-             int64 b);
+void update(int lf,int rt,int idx,int x,int y,int64 a,int64 b);
+void update1(int lf,int rt,int idx,int x,int y,int64 a,int64 b);
 void propagate(int lf,int rt,int idx);
 void propagate1(int lf,int rt,int idx);
-
 int64 query(int lf,int rt,int idx,int x);
-
 int64 query1(int lf,int rt,int idx,int x);
-
-int64 bs1(int64 a1,int64 b1,int64 a2,
-
-          int64 b2,int lf,int rt);
-
-
-int64 bs2(
-
-    int64 a1,
-
-    int64 b1,
-    int64 a2,
-    int64 b2,int lf,int rt);
+int64 bs1(int64 a1,int64 b1,int64 a2,int64 b2,int lf,int rt);
+int64 bs2(int64 a1,int64 b1,int64 a2,int64 b2,int lf,int rt);
 bool flag ;
 
 int main() {
@@ -186,6 +170,7 @@ int main() {
     }
 
 }
+
 void propagate(int lf,int rt,int idx) {
     int mid = (lf+rt)>>1;
     update(lf,mid,idx*2,lf,mid,T[idx].a,T[idx].b);
@@ -193,9 +178,7 @@ void propagate(int lf,int rt,int idx) {
     lazy[idx] = 0;
 }
 
-
-void update(int lf,int rt,int idx,int x,int y,
-            int64 a,int64 b) {
+void update(int lf,int rt,int idx,int x,int y,int64 a,int64 b) {
     if(lf>rt) return;
     if(lf>=x && rt<=y) {
         if(lazy[idx] == 0) {
@@ -213,7 +196,7 @@ void update(int lf,int rt,int idx,int x,int y,
                 T[idx].a = a;
                 T[idx].b = b + (iddx[lf] - iddx[x])*a;
                 lazy[idx] = 1;
-            }else if(tmp[0] >= tmp[2] && tmp[1] >= tmp[3]) {
+            } else if(tmp[0] >= tmp[2] && tmp[1] >= tmp[3]) {
                 return;
             } else {
                 if(tmp[0]<tmp[2] && tmp[1] >= tmp[3]) {
@@ -239,7 +222,6 @@ void update(int lf,int rt,int idx,int x,int y,
     if(y>mid)update(mid+1,rt,idx*2+1,x,y,a,b);
 }
 
-
 int64 query(int lf,int rt,int idx,int x) {
     if(lf==x && rt==x) {
         flag = lazy[idx];
@@ -250,13 +232,8 @@ int64 query(int lf,int rt,int idx,int x) {
     if(x<=mid) return query(lf,mid,idx*2,x);
     else return query(mid+1,rt,idx*2+1,x);
 }
-int64 bs1(int64 a1,
 
-          int64 b1,
-
-          int64 a2,
-
-          int64 b2,int lf,int rt) {
+int64 bs1(int64 a1,int64 b1,int64 a2,int64 b2,int lf,int rt) {
     int low = lf, high = rt,ans = -1;
     while(low<=high) {
         int mid = (low+high)>>1;
@@ -272,17 +249,10 @@ int64 bs1(int64 a1,
     return ans;
 }
 
-
-int64 bs2(int64 a1,
-          int64 b1,
-          int64 a2,
-
-          int64 b2,int lf,int rt) {
+int64 bs2(int64 a1,int64 b1,int64 a2,int64 b2,int lf,int rt) {
     int low = lf, high = rt,ans = rt+1;
     while(low<=high) {
         int mid = (low+high)>>1;
-
-
         int64 x = b1 + (iddx[mid]-iddx[lf])*a1,y = b2 + (iddx[mid]-iddx[lf])*a2;
         if(x<y) {
             high = mid - 1;
@@ -293,16 +263,15 @@ int64 bs2(int64 a1,
     }
     return ans;
 }
+
 void propagate1(int lf,int rt,int idx) {
     int mid = (lf+rt)>>1;
     update1(lf,mid,idx*2,lf,mid,T1[idx].a,T1[idx].b);
     update1(mid+1,rt,idx*2+1,mid+1,rt,T1[idx].a,T1[idx].b + (iddx[mid+1]-iddx[lf])*T1[idx].a);
     lazy1[idx] = 0;
 }
-void update1(int lf,int rt,int idx,int x,int y,
 
-             int64 a,
-             int64 b) {
+void update1(int lf,int rt,int idx,int x,int y,int64 a,int64 b) {
     if(lf>rt) return;
     if(lf >= x && rt<=y ) {
         if(lazy1[idx]) {
